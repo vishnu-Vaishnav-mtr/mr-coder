@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050816;
+  --foreground: #e8ecf5;
+  --glow: #7dd3fc;
+  --card: rgba(11, 16, 33, 0.7);
+  --grid: rgba(125, 211, 252, 0.08);
+}
+
+/* Dark mode overrides - redundant but kept for compatibility */
+.dark {
+  --background: #050816;
+  --foreground: #e8ecf5;
+  --glow: #7dd3fc;
+  --card: rgba(11, 16, 33, 0.7);
+  --grid: rgba(125, 211, 252, 0.08);
 }
 
 @theme inline {
@@ -12,15 +24,127 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+  /* Slate-950 to match theme */
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6 0%, #06b6d4 100%);
+  /* Blue to Cyan gradient */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #60a5fa 0%, #22d3ee 100%);
+  /* Lighter hover */
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.08), transparent 25%),
+    radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.1), transparent 26%),
+    radial-gradient(circle at 60% 80%, rgba(236, 72, 153, 0.08), transparent 20%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  /* scroll-behavior: smooth; - Moved to html */
+}
+
+a {
+  @apply transition-colors duration-200;
+}
+
+.glass {
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.14);
+}
+
+.glow {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 15px 60px rgba(96, 165, 250, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.neon-border {
+  position: relative;
+}
+
+.neon-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(96, 165, 250, 0.45), rgba(125, 211, 252, 0.4), rgba(236, 72, 153, 0.4));
+  filter: blur(10px);
+  z-index: -1;
+  opacity: 0.85;
+}
+
+.grid-lines {
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.button-primary {
+  @apply relative overflow-hidden rounded-full px-5 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300;
+  background: linear-gradient(120deg, #2563eb, #06b6d4, #2563eb);
+  background-size: 200% 200%;
+}
+
+.button-primary:hover {
+  background-position: 100% 0;
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.35);
+}
+
+.button-ghost {
+  @apply rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-foreground transition-all duration-300;
+}
+
+.button-ghost:hover {
+  @apply border-cyan-400/60 text-cyan-300 shadow-lg;
+  transform: translateY(-1px);
+}
+
+.pill {
+  @apply rounded-full bg-white/5 px-3 py-1 text-xs text-foreground/70 ring-1 ring-white/10;
+}
+
+::selection {
+  background: rgba(96, 165, 250, 0.2);
+  color: inherit;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
 }
