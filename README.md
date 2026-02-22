@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Mr. Coder - Portfolio & Projects
 
 ## Overview
@@ -41,3 +42,6 @@ The new `/projects` page is a dedicated section to browse all projects, categori
 
 3.  **Open the projects page:**
     Navigate to [http://localhost:3000/projects](http://localhost:3000/projects) to see the new projects section.
+=======
+# mr-coder
+>>>>>>> 16d8e65b99178b623c42fc3a23c7a6e8ca95b8e3
