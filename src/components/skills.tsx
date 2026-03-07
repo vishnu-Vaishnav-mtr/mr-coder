@@ -34,12 +34,13 @@ export function Skills() {
                             Conversion-ready builds
                         </h3>
                         <p className="mt-2 text-foreground/70">
-                            Design systems, CRO experiments, and performance budgets baked into every launch.
+                            Every website I build is focused on conversions from day one, with proper structure, smart layouts, and performance in mind.
                         </p>
                         <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                            <span className="pill">A/B testing</span>
+                            <span className="pill">Pixel-perfect Design</span>
                             <span className="pill">Analytics</span>
                             <span className="pill">SEO</span>
+                            <span className="pill">A/B testing</span>
                         </div>
                     </div>
                     <div className="md:col-span-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">

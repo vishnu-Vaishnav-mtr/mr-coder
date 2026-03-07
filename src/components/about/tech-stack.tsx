@@ -8,10 +8,10 @@ export function TechStack() {
         <section className="relative py-24">
             <div className="mb-16 text-center">
                 <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-                    Technical Arsenal
+                    Tech Stack
                 </h2>
                 <p className="mt-4 text-lg text-slate-400">
-                    The tools and technologies I use to build world-class digital products.
+                    Technologies and tools I use to build modern websites e-commerce stores and real estate websites.
                 </p>
             </div>
 

@@ -5,6 +5,7 @@ import { servicesData } from "@/data/services";
 import { ServiceCard } from "@/components/services/service-card";
 import { ProcessTimeline } from "@/components/services/process-timeline";
 import { LetsConnect } from "@/components/projects/lets-connect";
+import { ViewportLoader } from "@/components/viewport-loader";
 
 export default function ServicesPage() {
     return (
@@ -46,10 +47,14 @@ export default function ServicesPage() {
                 </div>
 
                 {/* Process Section */}
-                <ProcessTimeline />
+                <ViewportLoader minHeight="500px">
+                    <ProcessTimeline />
+                </ViewportLoader>
 
                 {/* CTA */}
-                <LetsConnect />
+                <ViewportLoader minHeight="300px">
+                    <LetsConnect />
+                </ViewportLoader>
             </div>
         </main>
     );

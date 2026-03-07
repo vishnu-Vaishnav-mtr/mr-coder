@@ -97,7 +97,7 @@ export function ExperienceStats() {
                                 </div>
 
                                 <p className="max-w-md mx-auto text-lg text-slate-400 leading-relaxed font-light text-center border-t border-cyan-500/20 pt-6">
-                                    Building robust digital ecosystems and scaling ecommerce brands with precision engineering.
+                                    With 5 years of experience in web development, I’ve worked on a wide range of projects from business websites to full ecommerce and real estate platforms.
                                 </p>
                             </div>
                         </TiltCard>
@@ -105,10 +105,10 @@ export function ExperienceStats() {
 
                     {/* Right Stats Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 content-center">
-                        <StatsCard value={20} suffix="K+" label="Projects Completed" />
-                        <StatsCard value={10} suffix="K+" label="Natural Products" />
-                        <StatsCard value={200} suffix="+" label="Clients Reviews" />
-                        <StatsCard value={1000} suffix="+" label="Satisfied Clients" />
+                        <StatsCard value={400} suffix="+" label="Projects Completed" />
+                        <StatsCard value={100} suffix="+" label="Shopify Stores Built" />
+                        <StatsCard value={250} suffix="+" label="WordPress Sites Developed" />
+                        <StatsCard value={390} suffix="+" label="Satisfied Clients" />
                     </div>
                 </motion.div>
             </div>

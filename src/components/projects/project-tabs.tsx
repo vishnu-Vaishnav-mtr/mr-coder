@@ -87,27 +87,23 @@ export function ProjectTabs() {
                 </div>
             </div>
 
-            {/* Projects Grid with Layout Animation */}
+            {/* Projects Grid with Smooth Animation */}
             <motion.div
-                layout
                 className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
-                <AnimatePresence mode="popLayout" initial={false}>
-                    {filteredProjects.map((project) => (
-                        <motion.div
-                            layout
-                            key={project.id}
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                            transition={{
-                                layout: { type: "spring", bounce: 0, duration: 0.4 },
-                                opacity: { duration: 0.3 }
-                            }}
-                        >
-                            <ProjectCard project={project} />
-                        </motion.div>
-                    ))}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={`${activeCategory}-${activeSubCategory}`}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        className="col-span-1 sm:col-span-2 lg:col-span-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                    >
+                        {filteredProjects.map((project) => (
+                            <ProjectCard key={project.id} project={project} />
+                        ))}
+                    </motion.div>
                 </AnimatePresence>
             </motion.div>
 

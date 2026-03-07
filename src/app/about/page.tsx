@@ -5,6 +5,7 @@ import { BioSection } from "@/components/about/bio-section";
 import { ExperienceTimeline } from "@/components/about/experience-timeline";
 import { TechStack } from "@/components/about/tech-stack";
 import { LetsConnect } from "@/components/projects/lets-connect";
+import { ViewportLoader } from "@/components/viewport-loader";
 
 export default function AboutPage() {
     return (
@@ -24,11 +25,19 @@ export default function AboutPage() {
 
                 {/* Sections */}
                 <BioSection />
-                <ExperienceTimeline />
-                <TechStack />
+                
+                <ViewportLoader minHeight="600px">
+                    <ExperienceTimeline />
+                </ViewportLoader>
+
+                <ViewportLoader minHeight="400px">
+                    <TechStack />
+                </ViewportLoader>
 
                 {/* CTA */}
-                <LetsConnect />
+                <ViewportLoader minHeight="300px">
+                    <LetsConnect />
+                </ViewportLoader>
             </div>
         </main>
     );

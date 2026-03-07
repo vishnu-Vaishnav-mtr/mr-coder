@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { FiMenu, FiX } from "react-icons/fi";
 
 type NavbarProps = {
   onHireClick?: () => void;
@@ -21,6 +22,7 @@ const links = [
 export function Navbar({ onHireClick }: NavbarProps) {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -81,8 +83,52 @@ export function Navbar({ onHireClick }: NavbarProps) {
           >
             Let&apos;s Talk
           </Link>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-white/80 hover:text-white transition-colors"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full left-0 right-0 mt-2 mx-[2.5%] rounded-2xl bg-slate-900/95 border border-white/10 shadow-2xl backdrop-blur-xl overflow-hidden py-4 px-6 flex flex-col gap-4 md:hidden"
+          >
+            {links.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "text-lg font-medium transition-colors p-2 rounded-lg",
+                    isActive ? "text-cyan-400 bg-cyan-500/10" : "text-white/80 hover:text-white hover:bg-white/5"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-2 text-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-400 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:scale-[1.02]"
+            >
+              Let&apos;s Talk
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

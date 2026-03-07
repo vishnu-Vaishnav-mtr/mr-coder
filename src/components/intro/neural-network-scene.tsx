@@ -42,12 +42,12 @@ function NetworkConnections({ nodes }: { nodes: THREE.Vector3[] }) {
 }
 
 function NetworkBackground() {
-    const count = 25; // Reduced from 40
+    const count = 15; // Reduced from 25 for huge performance gain
     const { phase } = useIntro();
     const nodes = useMemo(() => {
         const temp = [];
         for (let i = 0; i < count; i++) {
-            const x = (Math.random() - 0.5) * 60; // Reduced spread
+            const x = (Math.random() - 0.5) * 60; // Spread
             const y = (Math.random() - 0.5) * 40;
             const z = (Math.random() - 0.5) * 30 - 5;
             temp.push(new THREE.Vector3(x, y, z));
@@ -146,18 +146,18 @@ export function NeuralNetworkScene() {
 
                     <NetworkBackground />
 
-                    {/* Reduced stars - from 1500 to 800 total */}
-                    <Stars radius={100} depth={50} count={800} factor={3} saturation={0} fade speed={0.8} />
+                    {/* Reduced stars - from 800 to 300 total for extreme optimization */}
+                    <Stars radius={100} depth={50} count={300} factor={3} saturation={0} fade speed={0.8} />
 
                     <CameraController />
 
                     <EffectComposer>
                         <Bloom
-                            luminanceThreshold={0.3}
+                            luminanceThreshold={0.4}
                             mipmapBlur
                             intensity={0.4}
                             radius={0.3}
-                            levels={4} // Reduced from 5
+                            levels={3} // Reduced from 4
                         />
                     </EffectComposer>
                 </Suspense>

@@ -62,25 +62,24 @@ export function Hero() {
                     </motion.h1>
                     <Typewriter text="I build fast and stunning digital experiences." />
                     <p className="max-w-xl text-base text-foreground/70 md:text-lg">
-                        I design, build, and optimize ecommerce experiences with conversions,
-                        performance, and storytelling baked in from the first commit.
+                        I design, develop, and improve eCommerce websites that are built to sell. From the first line of code, I focus on speed, a smooth user experience, and clear brand messaging.
                     </p>
-                    <div className="flex flex-wrap items-center gap-3">
-                        <Link href="#projects" className="button-primary">
+                    <div className="flex flex-col sm:flex-row flex-wrap items-center sm:items-center gap-4 sm:gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+                        <Link href="#projects" className="button-primary w-full sm:w-auto text-center">
                             View My Work
                         </Link>
-                        <Link href="#contact" className="button-ghost">
+                        <Link href="#contact" className="button-ghost w-full sm:w-auto text-center">
                             Hire Me
                         </Link>
-                        <div className="flex items-center gap-3 text-sm text-foreground/70">
-                            <span className="pill">A/B Testing</span>
-                            <span className="pill">SEO Ready</span>
-                            <span className="pill">Performance First</span>
+                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-4 sm:mt-0 text-sm text-foreground/70 w-full sm:w-auto">
+                            <span className="pill whitespace-nowrap">Testing</span>
+                            <span className="pill whitespace-nowrap">SEO Ready</span>
+                            <span className="pill whitespace-nowrap">Performance First</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="relative h-[480px] w-full">
+                <div className="relative h-[300px] sm:h-[400px] md:h-[480px] w-full mt-8 md:mt-0">
                     <div className="absolute -inset-6 rounded-[28px] bg-gradient-to-r from-blue-500/20 via-cyan-400/15 to-purple-500/15 blur-3xl opacity-50" />
                     <motion.div
                         animate={{
@@ -94,7 +93,7 @@ export function Hero() {
                         className="relative h-full w-full  overflow-hidden"
                     >
                         <Image
-                            src="/hero-tech.png"
+                            src="/hero-banner-vishnu.png"
                             alt="Digital Experience"
                             fill
                             className="object-contain p-4 drop-shadow-2xl"

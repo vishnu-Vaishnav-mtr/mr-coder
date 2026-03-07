@@ -33,8 +33,7 @@ export function Footer() {
                         <span className="text-xl tracking-tight">Mr. Coder</span>
                     </Link>
                     <p className="max-w-xs leading-relaxed text-slate-400">
-                        Crafting high-performance digital experiences with Next.js, Shopify, and WordPress.
-                        Focused on conversion, speed, and premium aesthetics.
+                        I develop Shopify stores and WordPress websites with a focus on speed, clean design, and user experience.
                     </p>
                     <div className="flex items-center gap-4">
                         {socialLinks.slice(0, 3).map((link) => (

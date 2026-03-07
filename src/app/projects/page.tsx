@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ProjectTabs } from "@/components/projects/project-tabs";
 import { LetsConnect } from "@/components/projects/lets-connect";
+import { ViewportLoader } from "@/components/viewport-loader";
 
 export default function ProjectsPage() {
     return (
@@ -24,7 +25,7 @@ export default function ProjectsPage() {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="mx-auto max-w-2xl text-lg text-slate-400"
                     >
-                        A curated collection of commercially successful Shopify, WordPress, and Next.js projects.
+                        A selection of Shopify and WordPress projects I have built for businesses and brands.
                     </motion.p>
                 </div>
 
@@ -32,7 +33,9 @@ export default function ProjectsPage() {
                 <ProjectTabs />
 
                 {/* CTA */}
-                <LetsConnect />
+                <ViewportLoader minHeight="300px">
+                    <LetsConnect />
+                </ViewportLoader>
             </div>
         </main>
     );

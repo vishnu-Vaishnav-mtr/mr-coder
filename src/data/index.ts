@@ -2,12 +2,14 @@ import {
     SiHtml5,
     SiCss3,
     SiJavascript,
-    SiReact,
+    SiJquery,
     SiPhp,
     SiShopify,
     SiWordpress,
     SiGit,
     SiFigma,
+    SiSass,
+    SiBootstrap,
 } from "react-icons/si";
 import { TbDropletFilled } from "react-icons/tb";
 import type { IconType } from "react-icons";
@@ -45,7 +47,9 @@ export const skills: Skill[] = [
     { label: "HTML", icon: SiHtml5, color: "text-orange-500" },
     { label: "CSS", icon: SiCss3, color: "text-blue-500" },
     { label: "JavaScript", icon: SiJavascript, color: "text-amber-400" },
-    { label: "React", icon: SiReact, color: "text-cyan-400" },
+    { label: "jQuery", icon: SiJquery, color: "text-blue-400" },
+    { label: "SCSS", icon: SiSass, color: "text-pink-500" },
+    { label: "Bootstrap", icon: SiBootstrap, color: "text-purple-500" },
     { label: "PHP", icon: SiPhp, color: "text-indigo-400" },
     { label: "Liquid", icon: TbDropletFilled, color: "text-purple-400" },
     { label: "Shopify", icon: SiShopify, color: "text-emerald-400" },
@@ -128,21 +132,27 @@ export const commerceTabs: CommerceTab[] = [
 
 export const testimonials: Testimonial[] = [
     {
-        name: "Ava Thompson",
-        role: "CMO, D2C Brand",
+        name: "Sarah Jenkins",
+        role: "E-Commerce Director, Lumina Beauty",
         quote:
-            "We shipped a new Shopify experience in 3 weeks. Conversions jumped 28% and page speed hit 95+ on mobile.",
+            "Vishnu completely transformed our Shopify store. Not only did he drastically improve our mobile load times, but his custom theme tweaks also helped increase our checkout conversion rate by over 15% in just the first month.",
     },
     {
-        name: "Jordan Lee",
-        role: "Founder, SaaS",
+        name: "Marcus Reynolds",
+        role: "Founder, Velocity Gear",
         quote:
-            "Mr. Coder rebuilt our marketing site on WordPress + Next.js—editing is effortless and the animations feel premium.",
+            "We needed a complex WordPress migration done quickly and flawlessly. Mr. Coder delivered precisely that. His eye for design and attention to performance details truly sets him apart from other developers I've worked with.",
     },
     {
         name: "Priya Desai",
-        role: "Agency Partner",
+        role: "Project Manager, Elevate Digital",
         quote:
-            "Reliable, fast, and creative. Every project arrives polished with thoughtful microinteractions.",
+            "I've hired Vishnu for multiple client projects now, and he never misses a deadline. His ability to translate complex design mockups into pixel-perfect, highly responsive code is incredibly impressive.",
     },
+    {
+        name: "David Alcorn",
+        role: "Owner, Alcorn Coffee Roasters",
+        quote:
+            "Working with Vishnu was a breeze. He listened to exactly what we wanted for our online store, simplified our messy backend, and gave our customers a smooth purchasing experience. Highly recommended.",
+    }
 ];

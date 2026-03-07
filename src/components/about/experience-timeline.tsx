@@ -9,7 +9,7 @@ export function ExperienceTimeline() {
         <section className="relative py-24">
             <div className="mb-16">
                 <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl text-center">
-                    Professional Journey
+                    Work Experience
                 </h2>
             </div>
 
@@ -44,9 +44,13 @@ export function ExperienceTimeline() {
                                     <span>{item.company}</span>
                                 </div>
 
-                                <p className="mb-4 text-sm leading-relaxed text-slate-300">
-                                    {item.description}
-                                </p>
+                               <div className="mb-4 space-y-2 text-sm leading-relaxed text-slate-300">
+                                    {Array.isArray(item.description) ? (
+                                        item.description.map((para, i) => <p key={i}>{para}</p>)
+                                    ) : (
+                                        <p>{item.description}</p>
+                                    )}
+                                </div>
 
                                 <div className="flex flex-wrap gap-2">
                                     {item.skills.map(skill => (

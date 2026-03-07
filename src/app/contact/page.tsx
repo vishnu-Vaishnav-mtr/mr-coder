@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ContactForm } from "@/components/contact/contact-form";
 import { SocialGrid } from "@/components/contact/social-grid";
 import { FAQAccordion } from "@/components/contact/faq-accordion";
+import { ViewportLoader } from "@/components/viewport-loader";
 
 export default function ContactPage() {
     return (
@@ -83,7 +84,9 @@ export default function ContactPage() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
                 >
-                    <FAQAccordion />
+                    <ViewportLoader minHeight="400px">
+                        <FAQAccordion />
+                    </ViewportLoader>
                 </motion.div>
             </div>
         </main>

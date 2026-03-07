@@ -8,6 +8,7 @@ import { Skills } from "@/components/skills";
 import { CommerceShowcase } from "@/components/commerce-showcase";
 import { Testimonials } from "@/components/testimonials";
 import { Contact } from "@/components/contact";
+import { ViewportLoader } from "@/components/viewport-loader";
 
 const SkillLab = dynamic(
   () => import("@/components/mini-game/skill-lab").then((mod) => mod.SkillLab),
@@ -37,12 +38,16 @@ export default function Home() {
         </div>
 
         <div id="services">
-          <SkillLab />
+          <ViewportLoader minHeight="600px">
+            <SkillLab />
+          </ViewportLoader>
           <Skills />
         </div>
 
         <div id="experience">
-          <ExperienceStats />
+          <ViewportLoader minHeight="400px">
+            <ExperienceStats />
+          </ViewportLoader>
         </div>
 
         <div id="projects">
