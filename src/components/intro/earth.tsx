@@ -1,7 +1,7 @@
 "use client";
 
 import { useFrame, useThree } from "@react-three/fiber";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import * as THREE from "three";
 import { Html, Float, Trail } from "@react-three/drei";
 import { useIntro } from "./intro-context";
@@ -32,8 +32,11 @@ export function Earth({ distance, speed }: EarthProps) {
 
     const { camera } = useThree();
 
-    // Start angle
-    const angle = useRef(Math.random() * Math.PI * 2);
+    // Start angle safely hydrated
+    const angle = useRef(0);
+    useEffect(() => {
+        angle.current = Math.random() * Math.PI * 2;
+    }, []);
 
     // Tech Ring Particles
     const particles = useMemo(() => {

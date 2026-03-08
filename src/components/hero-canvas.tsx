@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
 import { motion } from "framer-motion";
@@ -30,25 +30,38 @@ function AnimatedSphere() {
 }
 
 export function HeroCanvas() {
+    const [isMobile, setIsMobile] = useState(true);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        setIsMobile(window.innerWidth < 768);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="absolute inset-0 -z-10"
+            className="absolute inset-0 -z-10 bg-slate-950"
         >
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 5]} intensity={1} />
-                <pointLight position={[-10, -10, -5]} intensity={0.5} color="#7dd3fc" />
-                <AnimatedSphere />
-                <OrbitControls
-                    enableZoom={false}
-                    enablePan={false}
-                    autoRotate
-                    autoRotateSpeed={0.5}
-                />
-            </Canvas>
+            {isMounted && (
+                <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1]} frameloop={isMobile ? "demand" : "always"}>
+                    <ambientLight intensity={0.5} />
+                    <directionalLight position={[10, 10, 5]} intensity={1} />
+                    <pointLight position={[-10, -10, -5]} intensity={0.5} color="#7dd3fc" />
+                    <AnimatedSphere />
+                    <OrbitControls
+                        enableZoom={false}
+                        enablePan={false}
+                        autoRotate
+                        autoRotateSpeed={0.5}
+                    />
+                </Canvas>
+            )}
         </motion.div>
     );
 }

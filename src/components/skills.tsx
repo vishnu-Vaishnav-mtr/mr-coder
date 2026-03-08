@@ -54,8 +54,7 @@ export function Skills() {
                                     whileInView="show"
                                     viewport={{ once: true, margin: "-40px" }}
                                     custom={index}
-                                    whileHover={{ y: -6, scale: 1.03 }}
-                                    className="glass glow group flex flex-col items-center gap-3 rounded-2xl border border-white/10 p-4 text-center"
+                                    className="glass glow group flex flex-col items-center gap-3 rounded-2xl border border-white/10 p-4 text-center hover:-translate-y-1.5 hover:scale-[1.03] transition-transform duration-300 ease-out"
                                 >
                                     <span
                                         className={`text-2xl drop-shadow-md transition duration-300 group-hover:scale-110 ${skill.color}`}

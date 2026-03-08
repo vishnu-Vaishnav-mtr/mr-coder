@@ -42,9 +42,9 @@ function SafetyTimeout() {
     useEffect(() => {
         if (phase !== "complete") {
             const timer = setTimeout(() => {
-                console.log("Intro safety timeout warning");
-                // skipIntro(); // Disabled auto-skip to let user interact
-            }, 60000);
+                console.log("Intro safety timeout. Auto-skipping.");
+                skipIntro(); 
+            }, 8000);
             return () => clearTimeout(timer);
         }
     }, [phase, skipIntro]);

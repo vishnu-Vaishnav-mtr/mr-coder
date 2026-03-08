@@ -11,11 +11,22 @@ type Burst = {
 
 export function ClickFog() {
     const [bursts, setBursts] = useState<Burst[]>([]);
+    const [isPointer, setIsPointer] = useState(false);
 
     useEffect(() => {
+        setIsPointer(window.matchMedia("(pointer: fine)").matches);
+
         const handleClick = (e: MouseEvent) => {
+            if (!window.matchMedia("(pointer: fine)").matches) return;
+
             const id = Date.now();
-            setBursts((prev) => [...prev, { id, x: e.clientX, y: e.clientY }]);
+            setBursts((prev) => {
+                const next = [...prev, { id, x: e.clientX, y: e.clientY }];
+                // Cap at max 3 active bursts to save CPU
+                if (next.length > 3) return next.slice(next.length - 3);
+                return next;
+            });
+
             // Clean up burst after animation
             setTimeout(() => {
                 setBursts((prev) => prev.filter((b) => b.id !== id));
@@ -25,6 +36,8 @@ export function ClickFog() {
         window.addEventListener("click", handleClick);
         return () => window.removeEventListener("click", handleClick);
     }, []);
+
+    if (!isPointer) return null;
 
     return (
         <div className="pointer-events-none fixed inset-0 z-[100] overflow-hidden">

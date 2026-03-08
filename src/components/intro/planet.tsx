@@ -1,7 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import * as THREE from "three";
 
 interface PlanetProps {
@@ -17,8 +17,11 @@ export function Planet({ size, distance, speed, color, ring }: PlanetProps) {
     const groupRef = useRef<THREE.Group>(null);
     const meshRef = useRef<THREE.Mesh>(null);
 
-    // Random start angle
-    const angle = useRef(Math.random() * Math.PI * 2);
+    // Random start angle safely hydrated
+    const angle = useRef(0);
+    useEffect(() => {
+        angle.current = Math.random() * Math.PI * 2;
+    }, []);
 
     useFrame((state) => {
         if (groupRef.current) {

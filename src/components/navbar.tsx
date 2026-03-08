@@ -33,18 +33,18 @@ export function Navbar({ onHireClick }: NavbarProps) {
     <motion.nav
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={`fixed left-0 right-0 top-0 z-50`}
+      className={`fixed left-0 right-0 top-0 z-50 pointer-events-none`}
     >
       <motion.div
         animate={{
-          backgroundColor: scrolled ? "rgba(12,16,32,0.9)" : "rgba(12,16,32,0.5)",
           scale: scrolled ? 0.98 : 1,
-          boxShadow: scrolled
-            ? "0 12px 40px rgba(0,0,0,0.25)"
-            : "0 10px 40px rgba(0,0,0,0.12)",
+          y: scrolled ? 2 : 0,
         }}
         transition={{ type: "spring", stiffness: 220, damping: 22 }}
-        className="mx-auto mt-4 flex w-[95%] max-w-7xl items-center justify-between rounded-full border border-white/10 px-6 py-3 text-sm text-foreground backdrop-blur-md"
+        className={cn(
+            "mx-auto mt-4 flex w-[95%] max-w-7xl items-center justify-between rounded-full border border-white/10 px-6 py-3 text-sm text-foreground transition-all duration-300 pointer-events-auto",
+            scrolled ? "bg-[#0c1020]/98 shadow-[0_12px_40px_rgba(0,0,0,0.5)]" : "bg-[#0c1020]/60 shadow-[0_10px_40px_rgba(0,0,0,0.12)]"
+        )}
       >
         <Link href="/" className="flex items-center gap-3 font-semibold">
           <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-500 via-cyan-400 to-sky-300 shadow-lg shadow-blue-500/30 ring-1 ring-white/20" />
@@ -101,7 +101,7 @@ export function Navbar({ onHireClick }: NavbarProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 mt-2 mx-[2.5%] rounded-2xl bg-slate-900/95 border border-white/10 shadow-2xl backdrop-blur-xl overflow-hidden py-4 px-6 flex flex-col gap-4 md:hidden"
+            className="absolute top-full left-0 right-0 mt-2 mx-[2.5%] rounded-2xl bg-slate-900/95 border border-white/10 shadow-2xl backdrop-blur-xl overflow-hidden py-4 px-6 flex flex-col gap-4 md:hidden pointer-events-auto"
           >
             {links.map((link) => {
               const isActive = pathname === link.href;

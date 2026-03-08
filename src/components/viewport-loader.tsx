@@ -1,21 +1,17 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ReactNode, useState } from "react";
+import { useRef } from "react";
+import { useInView } from "framer-motion";
+import { ReactNode } from "react";
 
-export function ViewportLoader({ children, minHeight = "400px" }: { children: ReactNode; minHeight?: string }) {
-    const [isInView, setIsInView] = useState(false);
+export function ViewportLoader({ children, minHeight = "100%" }: { children: ReactNode; minHeight?: string }) {
+    const ref = useRef<HTMLDivElement>(null);
+    // Mount when within 800px of scrolling into view, unmount when further away.
+    const isInView = useInView(ref, { margin: "800px" });
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "400px" }}
-            onViewportEnter={() => setIsInView(true)}
-            style={{ minHeight: isInView ? "auto" : minHeight }}
-            className="w-full relative min-w-full"
-        >
+        <div ref={ref} style={{ minHeight, width: "100%", height: "100%" }} className="relative transform-gpu">
             {isInView ? children : null}
-        </motion.div>
+        </div>
     );
 }

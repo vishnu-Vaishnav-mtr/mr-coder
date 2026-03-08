@@ -3,7 +3,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Stars, PerspectiveCamera, Line, Instance, Instances, Float } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { Suspense, useMemo, useRef, useEffect } from "react";
+import { Suspense, useMemo, useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 import { MrCoderNode } from "./mr-coder-node";
 import { useIntro } from "./intro-context";
@@ -122,16 +122,25 @@ function CameraController() {
 }
 
 export function NeuralNetworkScene() {
+    const [isMobile, setIsMobile] = useState(true);
+    const [isMounted, setIsMounted] = useState(false);
+    
+    useEffect(() => {
+        setIsMounted(true);
+        setIsMobile(window.innerWidth < 768);
+    }, []);
+
     return (
         <div className="fixed inset-0 z-0 bg-slate-950">
-            <Canvas
-                dpr={[1, 1.5]} // Limit pixel ratio
-                gl={{
-                    antialias: false,
-                    powerPreference: "high-performance",
-                    alpha: false
-                }}
-            >
+            {isMounted && (
+                <Canvas
+                    dpr={isMobile ? [0.5, 1] : [1, 1.5]} // Limit pixel ratio adaptively
+                    gl={{
+                        antialias: false,
+                        powerPreference: "high-performance",
+                        alpha: false
+                    }}
+                >
                 <PerspectiveCamera makeDefault position={[0, 0, 24]} fov={50} />
                 <color attach="background" args={['#020617']} />
 
@@ -147,21 +156,24 @@ export function NeuralNetworkScene() {
                     <NetworkBackground />
 
                     {/* Reduced stars - from 800 to 300 total for extreme optimization */}
-                    <Stars radius={100} depth={50} count={300} factor={3} saturation={0} fade speed={0.8} />
+                    <Stars radius={100} depth={50} count={isMobile ? 100 : 300} factor={3} saturation={0} fade speed={0.8} />
 
                     <CameraController />
 
-                    <EffectComposer>
-                        <Bloom
-                            luminanceThreshold={0.4}
-                            mipmapBlur
-                            intensity={0.4}
-                            radius={0.3}
-                            levels={3} // Reduced from 4
-                        />
-                    </EffectComposer>
+                    {!isMobile && (
+                        <EffectComposer>
+                            <Bloom
+                                luminanceThreshold={0.4}
+                                mipmapBlur
+                                intensity={0.4}
+                                radius={0.3}
+                                levels={3} // Reduced from 4
+                            />
+                        </EffectComposer>
+                    )}
                 </Suspense>
             </Canvas>
+            )}
         </div>
     )
 }

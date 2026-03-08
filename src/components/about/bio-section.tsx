@@ -66,6 +66,7 @@ export function BioSection() {
                             alt="Vishnu Vaishnav"
                             width={500}
                             height={600}
+                            sizes="(max-width: 1024px) 100vw, 50vw"
                             className="rounded-2xl border border-white/10 shadow-2xl object-cover w-full h-full"
                         />
                         </TiltCard>

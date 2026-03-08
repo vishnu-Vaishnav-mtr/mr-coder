@@ -1,14 +1,17 @@
 "use client";
 
-import { useState, useCallback, Suspense } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { GameScene } from "./game-scene";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { ViewportLoader } from "@/components/viewport-loader";
+import { useQualityProfile } from "@/lib/quality";
+
 export function SkillLab() {
+    const quality = useQualityProfile();
     const [score, setScore] = useState(0);
     const [lastCollected, setLastCollected] = useState<string | null>(null);
-    const [isInView, setIsInView] = useState(false);
 
     const handleCollect = useCallback((skillName: string) => {
         setScore((prev) => prev + 1);
@@ -18,12 +21,18 @@ export function SkillLab() {
         setTimeout(() => setLastCollected(null), 1000);
     }, []);
 
+    const [isMounted, setIsMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(true);
+    
+    useEffect(() => {
+        setIsMounted(true);
+        setIsMobile(window.innerWidth < 768);
+    }, []);
+
     return (
         <section
-            className="relative h-[600px] w-full overflow-hidden py-10"
+            className="relative h-[600px] w-full overflow-hidden py-10 hidden md:block"
             style={{ backgroundColor: "#020617" }}
-            onMouseEnter={() => setIsInView(true)}
-            onTouchStart={() => setIsInView(true)}
         >
             {/* UI Overlay */}
             <div className="absolute left-0 top-0 z-10 p-8 w-full pointer-events-none">
@@ -69,22 +78,22 @@ export function SkillLab() {
                 </AnimatePresence>
             </div>
 
-            <motion.div
-                onViewportEnter={() => {
-                    if (!isInView) setIsInView(true);
-                }}
-                viewport={{ once: true, margin: "200px" }}
-                className="absolute inset-0"
-            >
-                {isInView && (
-                    <Canvas dpr={[1, 1]} camera={{ position: [0, 0, 10], fov: 45 }}>
-                        <color attach="background" args={['#020617']} />
-                        <Suspense fallback={null}>
-                            <GameScene onCollect={handleCollect} />
-                        </Suspense>
-                    </Canvas>
-                )}
-            </motion.div>
+            <div className="absolute inset-0 z-0">
+                <ViewportLoader minHeight="100%">
+                    {isMounted && (
+                        <Canvas 
+                            dpr={isMobile ? [0.5, 1] : quality === 'high' ? [1, 2] : quality === 'medium' ? [1, 1.5] : [1, 1]} 
+                            camera={{ position: [0, 0, 10], fov: 45 }}
+                            frameloop={isMobile ? "demand" : "always"}
+                        >
+                            <color attach="background" args={['#020617']} />
+                            <Suspense fallback={null}>
+                                <GameScene onCollect={handleCollect} />
+                            </Suspense>
+                        </Canvas>
+                    )}
+                </ViewportLoader>
+            </div>
         </section>
     );
 }
