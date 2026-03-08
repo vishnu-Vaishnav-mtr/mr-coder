@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 function Typewriter({ text, speed = 70 }: { text: string; speed?: number }) {
     const [content, setContent] = useState("");
@@ -24,24 +24,15 @@ function Typewriter({ text, speed = 70 }: { text: string; speed?: number }) {
 }
 
 export function Hero() {
-    const ref = useRef<HTMLDivElement | null>(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"],
-    });
-    const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
-    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.6]);
 
     return (
         <section
             id="home"
-            ref={ref}
             className="relative flex min-h-screen flex-col justify-center overflow-hidden"
         >
             <div className="absolute inset-0 grid-lines opacity-50" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-black/60 dark:via-white/0" />
-            <motion.div
-                style={{ y, opacity }}
+            <div
                 className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pt-24 md:grid-cols-[1.1fr_0.9fr]"
             >
                 <div className="space-y-6">
@@ -80,28 +71,18 @@ export function Hero() {
                 </div>
 
                 <div className="relative h-[300px] sm:h-[400px] md:h-[480px] w-full mt-8 md:mt-0">
-                    <div className="absolute -inset-6 rounded-[28px] bg-gradient-to-r from-blue-500/20 via-cyan-400/15 to-purple-500/15 blur-3xl opacity-50" />
-                    <motion.div
-                        animate={{
-                            background: [
-                                "radial-gradient(circle at 20% 50%, rgba(34, 211, 238, 0.15), transparent 60%)",
-                                "radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.15), transparent 60%)",
-                                "radial-gradient(circle at 20% 50%, rgba(34, 211, 238, 0.15), transparent 60%)"
-                            ]
-                        }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                        className="relative h-full w-full  overflow-hidden"
-                    >
+                    <div className="relative h-full w-full overflow-hidden">
                         <Image
                             src="/hero-banner-vishnu.png"
                             alt="Digital Experience"
                             fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
                             className="object-contain p-4 drop-shadow-2xl"
                             priority
                         />
-                    </motion.div>
+                    </div>
                 </div>
-            </motion.div>
+            </div>
         </section>
     );
 }

@@ -49,7 +49,6 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <div className="fixed inset-0 z-[-1] bg-[radial-gradient(circle_at_20%_20%,rgba(96,165,250,0.08),transparent_25%),radial-gradient(circle_at_80%_0%,rgba(14,165,233,0.1),transparent_26%),radial-gradient(circle_at_60%_80%,rgba(236,72,153,0.08),transparent_20%)] pointer-events-none" />
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <ClientLayout>{children}</ClientLayout>
         </ThemeProvider>

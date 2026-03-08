@@ -6,10 +6,11 @@ import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ClickFog } from "@/components/click-fog";
+import { MotionConfig } from "framer-motion";
 
 const CursorSpotlight = dynamic(
     () => import("@/components/cursor-spotlight").then((m) => m.CursorSpotlight),
-    { ssr: false }
+    { ssr: false, loading: () => <div /> }
 );
 
 const ContactModal = dynamic(
@@ -19,7 +20,7 @@ const ContactModal = dynamic(
 
 const GlobalBackground = dynamic(
     () => import("@/components/global-background").then((m) => m.GlobalBackground),
-    { ssr: false }
+    { ssr: false, loading: () => <div className="fixed inset-0 z-[-1] bg-[#020617]" /> }
 );
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +29,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     const isHome = pathname === "/";
 
     return (
-        <>
+        <MotionConfig reducedMotion="user">
             <ClickFog />
             <CursorSpotlight />
             {!isHome && <GlobalBackground />}
@@ -36,6 +37,6 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
             {children}
             <Footer />
             <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
-        </>
+        </MotionConfig>
     );
 }

@@ -7,10 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const floatIn: Variants = {
-    hidden: { opacity: 0, y: 24 },
+    hidden: { opacity: 0, y: 15 },
     show: (i: number) => ({
         opacity: 1,
         y: 0,
-        transition: { delay: i * 0.08, type: "spring", stiffness: 220, damping: 24 },
+        transition: { delay: i * 0.04, duration: 0.3, ease: "easeOut" },
     }),
 };

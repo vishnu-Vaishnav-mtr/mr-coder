@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Float, Trail, Text } from "@react-three/drei";
 import * as THREE from "three";
@@ -35,7 +35,6 @@ export function GameScene({
     const { viewport } = useThree();
     const playerRef = useRef<THREE.Mesh>(null);
 
-    // Helper to generate a non-overlapping position
     const getSafePosition = (existingPositions: [number, number, number][]): [number, number, number] => {
         let position: [number, number, number];
         let attempts = 0;
@@ -85,7 +84,9 @@ export function GameScene({
         return initialSkills;
     });
 
-    useFrame(({ mouse }) => {
+    const cooldowns = useRef<Map<string, number>>(new Map());
+
+    useFrame(({ mouse, clock }) => {
         if (playerRef.current) {
             // Smooth player movement to mouse position
             const x = (mouse.x * viewport.width) / 2;
@@ -94,10 +95,16 @@ export function GameScene({
 
             // Check collisions with Player
             skills.forEach((skill) => {
+                const lastHit = cooldowns.current.get(skill.id) || 0;
+                if (clock.elapsedTime - lastHit < 1.0) return; // 1s cooldown per skill
+
                 const skillPos = new Vector3(...skill.position);
                 const distance = playerRef.current!.position.distanceTo(skillPos);
 
-                if (distance < 1.0) { // Collision radius
+                if (distance < 1.5) { // Collision radius (slightly increased for better feel)
+                    // Record collision time
+                    cooldowns.current.set(skill.id, clock.elapsedTime);
+                    
                     // Collision detected
                     onCollect(skill.name);
 
@@ -123,9 +130,9 @@ export function GameScene({
 
     return (
         <>
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={1} />
-            <fog attach="fog" args={['#020617', 5, 20]} />
+            <ambientLight intensity={0.8} />
+            <pointLight position={[10, 10, 10]} intensity={1.5} />
+            <fog attach="fog" args={['#020617', 8, 30]} />
 
             {/* Player */}
             <Trail

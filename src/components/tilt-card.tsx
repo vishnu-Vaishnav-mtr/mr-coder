@@ -57,26 +57,18 @@ export function TiltCard({ children, className, onClick }: TiltCardProps) {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
-            whileHover={{ y: -5, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            whileHover={{ y: -2, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
             style={{
                 rotateX,
                 rotateY,
                 transformStyle: "preserve-3d",
             }}
-            className={`relative transform-gpu transition-all duration-200 ease-out will-change-transform ${className}`}
+            className={`relative transform-gpu transition-all duration-200 ease-out ${className}`}
         >
             <div
-                style={{ transform: "translateZ(50px)" }}
-                className="pointer-events-none absolute inset-0 z-10 mix-blend-overlay opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            >
-                <motion.div
-                    style={{
-                        background: `radial-gradient(circle at ${glareX} ${glareY}, rgba(255,255,255,0.3) 0%, transparent 80%)`
-                    }}
-                    className="h-full w-full"
-                />
-            </div>
+                className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none rounded-[inherit] shadow-[inset_0_0_20px_rgba(255,255,255,0.05)]"
+            />
             {children}
         </motion.div>
     );

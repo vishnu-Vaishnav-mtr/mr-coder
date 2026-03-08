@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { FaQuoteLeft } from "react-icons/fa";
 import { Testimonial } from "@/data";
 
@@ -12,31 +11,22 @@ interface InfiniteTestimonialsProps {
 
 export function InfiniteTestimonials({
     testimonials,
-    speed = 20,
+    speed = 40,
     direction = "left",
 }: InfiniteTestimonialsProps) {
     // Duplicate items to create a seamless loop
-    const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
+    const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
 
     return (
         <div className="relative flex flex-col items-center justify-center overflow-hidden">
+            {/* Edge fading gradients */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/12 bg-gradient-to-r from-slate-950 to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/12 bg-gradient-to-l from-slate-950 to-transparent z-10" />
 
-
-            <div className="relative w-full overflow-hidden">
-                <motion.div
-                    className="flex w-max py-4"
-                    animate={{
-                        x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
-                    }}
-                    transition={{
-                        x: {
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            duration: speed,
-                            ease: "linear",
-                        },
-                    }}
-                    style={{ willChange: "transform" }}
+            <div className="relative w-full overflow-hidden" style={{ '--marquee-speed': `${speed}s` } as React.CSSProperties}>
+                <div
+                    className="flex w-max py-4 animate-marquee"
+                    style={{ animationDirection: direction === "left" ? "normal" : "reverse" }}
                 >
                     {duplicatedTestimonials.map((testimonial, idx) => (
                         <div
@@ -64,7 +54,7 @@ export function InfiniteTestimonials({
                             </div>
                         </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </div>
     );

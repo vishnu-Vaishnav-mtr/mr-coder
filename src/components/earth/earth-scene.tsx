@@ -6,6 +6,7 @@ import { Sphere, Cloud, Html, Sparkles, Stars, Float } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { MARKERS, latLngToVector3 } from "./earth-config";
+import { useQualityProfile } from "@/lib/quality";
 
 // Default sunny weather parameters
 const params = {
@@ -20,7 +21,11 @@ const params = {
 };
 
 export function EarthScene() {
+    const quality = useQualityProfile();
     const earthRadius = 2.5;
+    
+    // Adaptive geometry detail based on hardware
+    const segments = quality === "high" ? 64 : quality === "medium" ? 32 : 24;
 
     // Refs for animation smoothing
     const sunRef = useRef<THREE.DirectionalLight>(null);
@@ -52,12 +57,12 @@ export function EarthScene() {
             <directionalLight ref={sunRef} position={[10, 10, 5]} intensity={params.sunIntensity} />
 
             {/* Backdrops */}
-            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={0.5} />
+            <Stars radius={100} depth={50} count={quality === 'high' ? 5000 : quality === 'medium' ? 2000 : 500} factor={4} saturation={0} fade speed={0.5} />
 
             {/* Main Earth Sphere */}
             <Float speed={1} rotationIntensity={0.2} floatIntensity={0.2}>
                 <group rotation={[0, 0, 0.4]}> {/* Tilt axis */}
-                    <Sphere args={[earthRadius, 64, 64]}>
+                    <Sphere args={[earthRadius, segments, segments]}>
                         <meshStandardMaterial
                             color="#1e293b" // Slate base
                             emissive="#0f172a"
@@ -69,7 +74,7 @@ export function EarthScene() {
                     </Sphere>
 
                     {/* Wireframe Overlay for "Futuristic" feel */}
-                    <Sphere args={[earthRadius + 0.01, 64, 64]}>
+                    <Sphere args={[earthRadius + 0.01, segments, segments]}>
                         <meshBasicMaterial
                             color="#38bdf8"
                             wireframe
@@ -78,14 +83,16 @@ export function EarthScene() {
                         />
                     </Sphere>
 
-                    {/* Cloud Layer (Dynamic Opacity based on weather) */}
-                    <Cloud
-                        opacity={params.cloudOpacity}
-                        speed={0.4} // Rotation speed
-                        segments={20} // Number of particles
-                        color="#ffffff"
-                        position={[0, 0, 0]}
-                    />
+                    {/* Cloud Layer (Dynamic Opacity based on weather) - Hidden on low settings */}
+                    {quality !== 'low' && (
+                        <Cloud
+                            opacity={params.cloudOpacity}
+                            speed={0.4} // Rotation speed
+                            segments={quality === 'high' ? 20 : 10} // Number of particles
+                            color="#ffffff"
+                            position={[0, 0, 0]}
+                        />
+                    )}
 
                     {/* Markers */}
                     {MARKERS.map((marker, i) => {
@@ -123,20 +130,24 @@ export function EarthScene() {
                 </group>
             </Float>
 
-            {/* Weather Particles (Sun Motes) */}
-            <Sparkles
-                count={params.particleCount}
-                scale={12}
-                size={6}
-                speed={0.4}
-                opacity={0.6}
-                color={params.particleColor}
-            />
+            {/* Weather Particles (Sun Motes) - Reduced or disabled on lower tier devices */}
+            {quality !== 'low' && (
+                <Sparkles
+                    count={quality === 'high' ? params.particleCount : params.particleCount / 2}
+                    scale={12}
+                    size={6}
+                    speed={0.4}
+                    opacity={0.6}
+                    color={params.particleColor}
+                />
+            )}
 
-            {/* Post Processing */}
-            <EffectComposer enableNormalPass={false}>
-                <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} radius={0.6} />
-            </EffectComposer>
+            {/* Post Processing - Extremely expensive so disabled on low */}
+            {quality !== 'low' && (
+                <EffectComposer enableNormalPass={false}>
+                    <Bloom luminanceThreshold={1} mipmapBlur intensity={quality === 'high' ? 1.5 : 0.8} radius={0.6} />
+                </EffectComposer>
+            )}
         </>
     );
 }

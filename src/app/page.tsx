@@ -3,22 +3,18 @@
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero";
 import { IntroWrapper } from "@/components/intro/intro-wrapper";
-import { AboutSection } from "@/components/about-section";
-import { Skills } from "@/components/skills";
-import { CommerceShowcase } from "@/components/commerce-showcase";
-import { Testimonials } from "@/components/testimonials";
-import { Contact } from "@/components/contact";
 import { ViewportLoader } from "@/components/viewport-loader";
 
-const SkillLab = dynamic(
-  () => import("@/components/mini-game/skill-lab").then((mod) => mod.SkillLab),
-  { ssr: false }
-);
+// Massive Code Splitting: Defer parsing and hydration of everything below the fold
+const AboutSection = dynamic(() => import("@/components/about-section").then(m => m.AboutSection));
+const Skills = dynamic(() => import("@/components/skills").then(m => m.Skills));
+const CommerceShowcase = dynamic(() => import("@/components/commerce-showcase").then(m => m.CommerceShowcase));
+const Testimonials = dynamic(() => import("@/components/testimonials").then(m => m.Testimonials));
+const Contact = dynamic(() => import("@/components/contact").then(m => m.Contact));
 
-const ExperienceStats = dynamic(
-  () => import("@/components/experience-stats").then((mod) => mod.ExperienceStats),
-  { ssr: false }
-);
+// WebGL Blobs (No SSR processing, heavy code split)
+const SkillLab = dynamic(() => import("@/components/mini-game/skill-lab").then(m => m.SkillLab), { ssr: false });
+const ExperienceStats = dynamic(() => import("@/components/experience-stats").then(m => m.ExperienceStats), { ssr: false });
 
 export default function Home() {
   const scrollToContact = () => {
@@ -30,32 +26,40 @@ export default function Home() {
 
   return (
     <IntroWrapper>
-      <main className="relative min-h-screen overflow-x-hidden bg-noise">
+      <main className="relative min-h-screen">
         <Hero />
 
         <div id="about">
-          <AboutSection />
+          <ViewportLoader minHeight="800px">
+            <AboutSection />
+          </ViewportLoader>
         </div>
 
         <div id="services">
           <ViewportLoader minHeight="600px">
             <SkillLab />
           </ViewportLoader>
-          <Skills />
+          <ViewportLoader minHeight="600px">
+            <Skills />
+          </ViewportLoader>
         </div>
 
         <div id="experience">
-          <ViewportLoader minHeight="400px">
+          <ViewportLoader minHeight="600px">
             <ExperienceStats />
           </ViewportLoader>
         </div>
 
         <div id="projects">
-          <CommerceShowcase onHireClick={scrollToContact} />
+          <ViewportLoader minHeight="800px">
+            <CommerceShowcase onHireClick={scrollToContact} />
+          </ViewportLoader>
         </div>
 
         <div id="testimonials">
-          <Testimonials />
+          <ViewportLoader minHeight="400px">
+            <Testimonials />
+          </ViewportLoader>
         </div>
 
         <div id="contact">

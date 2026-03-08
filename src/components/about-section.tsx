@@ -90,107 +90,7 @@ function RotatingText() {
     );
 }
 
-function DecryptedText({ text }: { text: string }) {
-    const [display, setDisplay] = useState(text);
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
-
-    const scramble = () => {
-        let iteration = 0;
-        const interval = setInterval(() => {
-            setDisplay(
-                text
-                    .split("")
-                    .map((letter, index) => {
-                        if (index < iteration) return text[index];
-                        return chars[Math.floor(Math.random() * chars.length)];
-                    })
-                    .join("")
-            );
-            if (iteration >= text.length) clearInterval(interval);
-            iteration += 1; // Faster iteration to reduce loop duration
-        }, 50); // Slower interval for less CPU hit
-    };
-
-    useEffect(() => {
-        // Only run once on mount, then rely on hover
-        const timeout = setTimeout(scramble, 500);
-        return () => clearTimeout(timeout);
-    }, []);
-
-    return (
-        <motion.h2
-            whileHover={{ scale: 1.02 }}
-            onHoverStart={scramble}
-            className="text-3xl md:text-5xl font-bold tracking-tight cursor-pointer transform-gpu will-change-transform"
-        >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 drop-shadow-lg">
-                {display}
-            </span>
-        </motion.h2>
-    );
-}
-
-function AmbientLight() {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const [mounted, setMounted] = useState(false);
-    const [isMobile, setIsMobile] = useState(true);
-
-    useEffect(() => {
-        setMounted(true);
-        setIsMobile(window.innerWidth < 768);
-
-        let frameId: number;
-        const handleMouseMove = (e: MouseEvent) => {
-            cancelAnimationFrame(frameId);
-            frameId = requestAnimationFrame(() => {
-                const { clientX, clientY } = e;
-                const { innerWidth, innerHeight } = window;
-                mouseX.set((clientX / innerWidth) - 0.5);
-                mouseY.set((clientY / innerHeight) - 0.5);
-            });
-        };
-
-        window.addEventListener("mousemove", handleMouseMove, { passive: true });
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            cancelAnimationFrame(frameId);
-        };
-    }, [mouseX, mouseY]);
-
-    return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-            {/* Cinematic Sunlight Beam - Hardware Accelerated */}
-            <motion.div
-                style={{ x: useTransform(mouseX, [-0.5, 0.5], [20, -20]), y: useTransform(mouseY, [-0.5, 0.5], [20, -20]) }}
-                animate={{ opacity: [0.1, 0.15, 0.1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-[20%] -left-[10%] w-[150%] h-[150%] bg-[conic-gradient(from_0deg_at_50%_50%,rgba(6,182,212,0.15)_0deg,transparent_60deg,transparent_300deg,rgba(6,182,212,0.15)_360deg)] blur-[80px] rotate-45 transform-gpu will-change-transform will-change-opacity"
-            />
-            {/* Floating Dust Particles - Optimized count and rendering */}
-            {mounted && !isMobile && [...Array(8)].map((_, i) => (
-                <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 bg-cyan-400/30 rounded-full transform-gpu will-change-transform"
-                    style={{
-                        top: `${20 + Math.random() * 60}%`,
-                        left: `${20 + Math.random() * 60}%`,
-                    }}
-                    animate={{
-                        y: [0, -60, 0],
-                        opacity: [0, 0.4, 0],
-                    }}
-                    transition={{
-                        duration: 8 + Math.random() * 4,
-                        repeat: Infinity,
-                        delay: Math.random() * 5,
-                        ease: "linear",
-                    }}
-                />
-            ))}
-        </div>
-    );
-}
+// Removed AmbientLight and DecryptedText unused functions
 
 
 export function AboutSection() {
@@ -233,12 +133,12 @@ export function AboutSection() {
                     {/* LEFT PANEL - STICKY */}
                     <div className="lg:sticky lg:top-32 lg:h-fit flex flex-col gap-6">
                         {/* Video Player Card for AI Intro */}
-                        <div className="relative mx-auto  group rounded-[2rem] p-1.5 sm:p-2 bg-slate-900/50 backdrop-blur-xl border border-white/10 shadow-2xl transition-all duration-500 hover:border-cyan-500/30 hover:shadow-[0_0_40px_rgba(34,211,238,0.15)] flex-shrink-0">
+                        <div className="relative mx-auto group rounded-[2rem] p-1.5 sm:p-2 bg-slate-900/80 border border-white/10 shadow-2xl transition-all duration-500 hover:border-cyan-500/30 hover:shadow-[0_0_40px_rgba(34,211,238,0.15)] flex-shrink-0">
                             {/* Decorative glowing background behind video */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 rounded-[2rem] blur-xl group-hover:blur-2xl transition-all duration-500" />
+                            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-purple-500/10 rounded-[2rem] blur-xl transform-gpu" />
 
                             {/* Video Container */}
-                            <div className="relative w-full h-full overflow-hidden rounded-[1.5rem] bg-slate-950/80 border border-white/5">
+                            <div className="relative w-full h-full overflow-hidden rounded-[1.5rem] bg-slate-950 border border-white/5">
                                 {/* <video
                                     ref={videoRef}
                                     src="/bio.mp4"
@@ -252,6 +152,7 @@ export function AboutSection() {
                                         alt="Vishnu Vaishnav"
                                         width={500}
                                         height={600}
+                                        sizes="(max-width: 1024px) 100vw, 50vw"
                                         className="rounded-2xl border border-white/10 shadow-2xl object-cover w-full h-full"
                                     />
                                 </TiltCard>
@@ -277,7 +178,7 @@ export function AboutSection() {
                     <motion.div ref={containerRef} className="relative flex flex-col gap-6 md:gap-8 pl-6 lg:pl-10 border-l border-white/5 mx-2 md:mx-0">
                         {/* Timeline Progress Line */}
                         <motion.div
-                            style={{ scaleY: smoothProgress, originY: 0 }}
+                            style={{ scaleY: scrollYProgress, originY: 0 }}
                             className="absolute left-[-1px] top-0 w-[2px] h-full bg-gradient-to-b from-cyan-500 via-blue-500 to-purple-500"
                         />
 
