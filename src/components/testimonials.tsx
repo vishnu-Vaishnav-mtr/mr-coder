@@ -7,7 +7,7 @@ import { InfiniteTestimonials } from "@/components/testimonials/infinite-testimo
 
 export function Testimonials() {
     return (
-        <section className="relative py-24 overflow-hidden">
+        <section className="relative py-0 md:py-24 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent pointer-events-none" />
 
             <div className="relative mx-auto space-y-16 px-5">

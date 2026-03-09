@@ -36,7 +36,7 @@ export default function Home() {
         </div>
 
         <div id="services">
-          <ViewportLoader minHeight="600px">
+          <ViewportLoader minHeight="600px" className="hidden md:block">
             <SkillLab />
           </ViewportLoader>
           <ViewportLoader minHeight="600px">
