@@ -48,7 +48,7 @@ export function Navbar({ onHireClick }: NavbarProps) {
       >
         <Link href="/" className="flex items-center gap-3 font-semibold">
           <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-500 via-cyan-400 to-sky-300 shadow-lg shadow-blue-500/30 ring-1 ring-white/20" />
-          <span className="hidden sm:inline text-lg tracking-tight">Mr. Coder</span>
+          <span className="text-lg tracking-tight">Mr. Coder</span>
         </Link>
 
         <div className="hidden items-center gap-1 rounded-full bg-white/5 px-2 py-1 text-xs md:flex">
@@ -96,12 +96,8 @@ export function Navbar({ onHireClick }: NavbarProps) {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 mt-2 mx-[2.5%] rounded-2xl bg-slate-900/95 border border-white/10 shadow-2xl backdrop-blur-xl overflow-hidden py-4 px-6 flex flex-col gap-4 md:hidden pointer-events-auto"
+          <div
+            className="absolute top-full left-0 right-0 mt-2 mx-[2.5%] rounded-2xl bg-[#0c1020] border border-white/10 shadow-2xl overflow-hidden py-4 px-6 flex flex-col gap-4 md:hidden pointer-events-auto transform-gpu"
           >
             {links.map((link) => {
               const isActive = pathname === link.href;
@@ -126,7 +122,7 @@ export function Navbar({ onHireClick }: NavbarProps) {
             >
               Let&apos;s Talk
             </Link>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </motion.nav>

@@ -12,7 +12,7 @@ export function FeaturedProjects() {
     const [selected, setSelected] = useState<Project | null>(null);
 
     return (
-        <section id="projects" className="relative py-24">
+        <section id="projects" className="relative py-0 md:py-24">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent" />
             <div className="relative mx-auto max-w-6xl space-y-10 px-5">
                 <div className="flex items-center justify-between gap-3">

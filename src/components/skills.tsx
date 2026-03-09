@@ -6,7 +6,7 @@ import { floatIn } from "@/lib/utils";
 
 export function Skills() {
     return (
-        <section id="skills" className="relative py-24">
+        <section id="skills" className="relative py-0 md:py-24">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent" />
             <div className="relative mx-auto max-w-6xl space-y-10 px-5">
                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
